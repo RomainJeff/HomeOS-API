@@ -20,13 +20,32 @@ app.use(function (req, res, next)
 app.use(bodyParser());
 
 
+/** VERIFICATION KEY **/
+function privateKeyCheck(req, res, next)
+{
+    var privateKey = req.query.key;
+
+    if (!privateKey || privateKey != globalConfig.privateKey) {
+        res.send(
+            JSON.stringify({
+                error: true,
+                message: "Vous n'êtes pas autorisé"
+            })
+        );
+        return false;
+    }
+
+    next();
+}
+
+
 /** MYSQL **/
 var connection = mysql.createConnection(globalConfig.mysql);
 objectsModel.init(connection);
 
 
 /** APP **/
-app.put("/refresh/:id", function (req, res) {
+app.put("/refresh/:id", privateKeyCheck, function (req, res) {
     var id = req.params.id;
     var ip = req.body.ip;
 
@@ -54,7 +73,7 @@ app.put("/refresh/:id", function (req, res) {
     );
 });
 
-app.get("/get/:id", function (req, res) {
+app.get("/get/:id", privateKeyCheck, function (req, res) {
     var id = req.params.id;
 
     objectsModel.get(id,
