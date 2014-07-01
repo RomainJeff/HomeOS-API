@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/RomainJeff/HomeOS-API",
   "dependencies": {
-    "body-parser": "^1.4.3",
-    "express": "^4.4.5"
+    "body-parser": "*",
+    "express": "^4.4.5",
+    "mysql": "^2.3.2"
   }
 }
