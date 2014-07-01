@@ -16,5 +16,18 @@ module.exports = {
 
             successCallback();
         })
+    },
+
+    get : function (id, successCallback, errorCallback)
+    {
+        this.connection.query("SELECT * FROM objects LEFT JOIN ports ON objects.type = ports.type WHERE objects.id = '"+ id +"' ", function (error, rows)
+        {
+            if (error) {
+                errorCallback("Impossible de recuperer les informations de cet appareil");
+                return false;
+            }
+            
+            successCallback(rows);
+        });
     }
 }

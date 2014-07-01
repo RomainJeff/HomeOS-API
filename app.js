@@ -2,6 +2,8 @@ var express = require("express");
 var mysql = require("mysql");
 var app = express();
 var bodyParser = require("body-parser");
+
+var globalConfig = require("./config.js");
 var objectsModel = require("./models/objectsModel.js");
 
 
@@ -19,13 +21,7 @@ app.use(bodyParser());
 
 
 /** MYSQL **/
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "coffee-machine"
-});
-
+var connection = mysql.createConnection(globalConfig.mysql);
 objectsModel.init(connection);
 
 
@@ -61,9 +57,33 @@ app.put("/refresh/:id", function (req, res) {
 app.get("/get/:id", function (req, res) {
     var id = req.params.id;
 
+    objectsModel.get(id,
+        function (rows)
+        {
+            res.send(
+                JSON.stringify({
+                    error: false,
+                    datas: rows
+                })
+            );
+        },
+
+        function (message)
+        {
+            console.log("[ERROR] "+ message);
+            res.send(
+                JSON.stringify({
+                    error: true,
+                    message: message
+                })
+            );
+        }
+    );
 
 });
 
 
 /** START **/
+console.log("Application is up !");
+
 app.listen(3000);
