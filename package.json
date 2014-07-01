@@ -1,0 +1,23 @@
+{
+  "name": "HomeOS-API",
+  "version": "1.0.0",
+  "description": "API of homeOS software",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RomainJeff/HomeOS-API"
+  },
+  "author": "Romain QUILLIOT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RomainJeff/HomeOS-API/issues"
+  },
+  "homepage": "https://github.com/RomainJeff/HomeOS-API",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5"
+  }
+}
